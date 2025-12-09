@@ -1,4 +1,4 @@
-Below is the complete slide-wise PPT content (25+ slides) for your project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator.
+This project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator.
 You can copy this directly into PowerPoint.
 ________________________________________
 ✅ MICROSERVICES PROJECT – PPT CONTENT (TEXT VERSION)
