@@ -5,11 +5,14 @@ import com.codebyarunyadav.book.model.Book;
 import com.codebyarunyadav.book.repo.BookRepository;
 import com.codebyarunyadav.book.services.BookService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "Book API", description = "Books CRUD operations")
 @RestController
 @RequestMapping("/books")
 public class BookController {
