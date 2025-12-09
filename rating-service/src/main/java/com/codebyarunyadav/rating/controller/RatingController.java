@@ -1,7 +1,8 @@
 package com.codebyarunyadav.rating.controller;
 
 import com.codebyarunyadav.rating.model.Rating;
-import com.example.rating.repo.RatingRepository;
+import com.codebyarunyadav.rating.repo.RatingRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

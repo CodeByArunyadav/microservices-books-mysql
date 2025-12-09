@@ -1,4 +1,4 @@
-package com.example.rating.repo;
+package com.codebyarunyadav.rating.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
