@@ -1,26 +1,41 @@
-server:
-  port: 8080
-
 spring:
-  application:
-    name: api-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: author-service
-          uri: lb://AUTHOR-SERVICE
-          predicates:
-            - Path=/authors/**
-        - id: book-service
-          uri: lb://BOOK-SERVICE
-          predicates:
-            - Path=/books/**
-        - id: rating-service
-          uri: lb://RATING-SERVICE
-          predicates:
-            - Path=/ratings/**
-
+  server:
+    port: 8080
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: 'http://localhost:8761/eureka'
+springdoc:
+  enable-native-support: true
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    urls:
+      - name: book-service
+        url: /book-service/v3/api-docs
+      - name: author-service
+        url: /author-service/v3/api-docs
+      - name: rating-service
+        url: /rating-service/v3/api-docs
+cloud:
+  gateway:
+    routes:
+      - id: book-service
+        uri: 'lb://BOOK-SERVICE'
+        predicates:
+          - Path=/book-service/**
+        filters:
+          - StripPrefix=1
+      - id: author-service
+        uri: 'lb://AUTHOR-SERVICE'
+        predicates:
+          - Path=/author-service/**
+        filters:
+          - StripPrefix=1
+      - id: rating-service
+        uri: 'lb://RATING-SERVICE'
+        predicates:
+          - Path=/rating-service/**
+        filters:
+          - StripPrefix=1
