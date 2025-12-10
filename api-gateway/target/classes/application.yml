@@ -42,3 +42,21 @@ Spring:
             - Path=/rating-service/**
           filters:
             - StripPrefix=1
+        - id: book-actuator
+          uri: 'lb://BOOK-SERVICE'
+          predicates:
+            - Path=/book-service/actuator/**
+          filters:
+            - StripPrefix=1
+        - id: author-actuator
+          uri: 'lb://AUTHOR-SERVICE'
+          predicates:
+            - Path=/author-service/actuator/**
+          filters:
+            - StripPrefix=1
+        - id: rating-actuator
+          uri: 'lb://RATING-SERVICE'
+          predicates:
+            - Path=/rating-service/actuator/**
+          filters:
+            - StripPrefix=1	 
