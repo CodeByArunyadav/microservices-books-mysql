@@ -10,8 +10,7 @@ name: CI/CD – Build & Push All Microservices
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -19,26 +18,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout Code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
 
-      # Build All Microservices
-      - name: Build with Maven
+      # --------------------------
+      # 🔥 Build api-gateway
+      # --------------------------
+      - name: Build api-gateway
         run: mvn clean install -DskipTests
+        working-directory: api-gateway
 
-      # --------------------------
-      # 🔥 Build & Push API-GATEWAY
-      # --------------------------
-      - name: Build & Push api-gateway
+      - name: Build & Push api-gateway Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/api-gateway
@@ -49,9 +45,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # --------------------------
-      # 🔥 author-service
+      # 🔥 Build author-service
       # --------------------------
-      - name: Build & Push author-service
+      - name: Build author-service
+        run: mvn clean install -DskipTests
+        working-directory: author-service
+
+      - name: Build & Push author-service Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/author-service
@@ -62,9 +62,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # --------------------------
-      # 🔥 book-service
+      # 🔥 Build book-service
       # --------------------------
-      - name: Build & Push book-service
+      - name: Build book-service
+        run: mvn clean install -DskipTests
+        working-directory: book-service
+
+      - name: Build & Push book-service Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/book-service
@@ -75,9 +79,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # --------------------------
-      # 🔥 eureka-server
+      # 🔥 Build eureka-server
       # --------------------------
-      - name: Build & Push eureka-server
+      - name: Build eureka-server
+        run: mvn clean install -DskipTests
+        working-directory: eureka-server
+
+      - name: Build & Push eureka-server Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/eureka-server
@@ -88,9 +96,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # --------------------------
-      # 🔥 rating-service
+      # 🔥 Build rating-service
       # --------------------------
-      - name: Build & Push rating-service
+      - name: Build rating-service
+        run: mvn clean install -DskipTests
+        working-directory: rating-service
+
+      - name: Build & Push rating-service Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/rating-service
@@ -99,5 +111,6 @@ jobs:
           dockerfile: rating-service/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
 
 
