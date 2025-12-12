@@ -6,64 +6,98 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Microservices CI/CD
+name: CI/CD – Build & Push All Microservices
 
 on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
-  detect-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      service: ${{ steps.detect.outputs.service }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Detect which microservice changed
-        id: detect
-        run: |
-          if git diff --name-only HEAD~1 HEAD | grep "^service-A/"; then
-            echo "service=A" >> $GITHUB_OUTPUT
-          elif git diff --name-only HEAD~1 HEAD | grep "^service-B/"; then
-            echo "service=B" >> $GITHUB_OUTPUT
-          elif git diff --name-only HEAD~1 HEAD | grep "^service-C/"; then
-            echo "service=C" >> $GITHUB_OUTPUT
-          else
-            echo "service=none" >> $GITHUB_OUTPUT
-          fi
-
-  build:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.service != 'none'
+  build-all:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # Checkout Code
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      # Setup JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: temurin
+          distribution: 'temurin'
           cache: maven
 
-      - name: Build Maven project
-        run: mvn clean install -B
-        working-directory: ${{ needs.detect-changes.outputs.service }}
+      # Build All Microservices
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
 
-      - name: Build & push Docker image
+      # --------------------------
+      # 🔥 Build & Push API-GATEWAY
+      # --------------------------
+      - name: Build & Push api-gateway
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
-          image: yourdocker/${{ needs.detect-changes.outputs.service }}
+          image: ${{ secrets.DOCKER_USERNAME }}/api-gateway
           tags: latest
           registry: docker.io
-          dockerfile: ${{ needs.detect-changes.outputs.service }}/Dockerfile
+          dockerfile: api-gateway/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # --------------------------
+      # 🔥 author-service
+      # --------------------------
+      - name: Build & Push author-service
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: ${{ secrets.DOCKER_USERNAME }}/author-service
+          tags: latest
+          registry: docker.io
+          dockerfile: author-service/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # --------------------------
+      # 🔥 book-service
+      # --------------------------
+      - name: Build & Push book-service
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: ${{ secrets.DOCKER_USERNAME }}/book-service
+          tags: latest
+          registry: docker.io
+          dockerfile: book-service/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # --------------------------
+      # 🔥 eureka-server
+      # --------------------------
+      - name: Build & Push eureka-server
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: ${{ secrets.DOCKER_USERNAME }}/eureka-server
+          tags: latest
+          registry: docker.io
+          dockerfile: eureka-server/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # --------------------------
+      # 🔥 rating-service
+      # --------------------------
+      - name: Build & Push rating-service
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: ${{ secrets.DOCKER_USERNAME }}/rating-service
+          tags: latest
+          registry: docker.io
+          dockerfile: rating-service/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
 
