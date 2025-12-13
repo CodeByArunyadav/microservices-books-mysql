@@ -1,5 +1,5 @@
 This project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator + Maven build with Github Action + Run dockerfile create images of all microservices  and push it to Docker hub.
-You can copy this directly into PowerPoint.
+
 ________________________________________
 ✅ MICROSERVICES PROJECT – PPT CONTENT (TEXT VERSION)
 Project: Books, Authors, Ratings Microservices with Eureka + Gateway + MySQL + Swagger
