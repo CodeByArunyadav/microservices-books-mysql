@@ -1,12 +1,9 @@
 server:
   port: 8080
-spring:
-  application:
-    name: API-GATEWAY
 eureka:
   client:
     service-url:
-      defaultZone: 'http://localhost:8761/eureka'
+       defaultZone: 'http://localhost:8761/eureka'
 springdoc:
   api-docs:
     enabled: true
@@ -20,7 +17,9 @@ springdoc:
         url: /book-service/v3/api-docs
       - name: rating-service
         url: /rating-service/v3/api-docs
-Spring:
+spring:
+  application:
+    name: API-GATEWAY
   cloud:
     gateway:
       routes:
@@ -59,4 +58,15 @@ Spring:
           predicates:
             - Path=/rating-service/actuator/**
           filters:
-            - StripPrefix=1	 
+            - StripPrefix=1
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:8080'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: '*'
