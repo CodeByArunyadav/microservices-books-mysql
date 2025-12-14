@@ -59,4 +59,16 @@ Spring:
           predicates:
             - Path=/rating-service/actuator/**
           filters:
-            - StripPrefix=1	 
+            - StripPrefix=1
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:8080'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: '*'
+ 
