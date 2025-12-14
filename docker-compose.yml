@@ -21,7 +21,7 @@ services:
       retries: 5
 
   eureka-server:
-    image: codebyarunyadav/eureka-server:master-607c1e0
+    image: codebyarunyadav/eureka-server:master-54a8eb8
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -29,7 +29,7 @@ services:
       - ms-network
 
   api-gateway:
-    image: codebyarunyadav/api-gateway:master-607c1e0
+    image: codebyarunyadav/api-gateway:master-54a8eb8
     container_name: api-gateway
     ports:
       - "8080:8080"
@@ -39,7 +39,7 @@ services:
       - ms-network
 
   book-service:
-    image: codebyarunyadav/book-service:master-607c1e0
+    image: codebyarunyadav/book-service:master-54a8eb8
     container_name: book-service
     ports:
       - "8081:8081"
@@ -52,7 +52,7 @@ services:
       - ms-network
 
   author-service:
-    image: codebyarunyadav/author-service:master-607c1e0
+    image: codebyarunyadav/author-service:master-54a8eb8
     container_name: author-service
     ports:
       - "8082:8082"
@@ -65,7 +65,7 @@ services:
       - ms-network
 
   rating-service:
-    image: codebyarunyadav/rating-service:master-607c1e0
+    image: codebyarunyadav/rating-service:master-54a8eb8
     container_name: rating-service
     ports:
       - "8083:8083"
