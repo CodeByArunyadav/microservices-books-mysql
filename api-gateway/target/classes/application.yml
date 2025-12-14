@@ -1,8 +1,5 @@
 server:
   port: 8080
-spring:
-  application:
-    name: API-GATEWAY
 eureka:
   client:
     service-url:
@@ -20,7 +17,9 @@ springdoc:
         url: /book-service/v3/api-docs
       - name: rating-service
         url: /rating-service/v3/api-docs
-Spring:
+spring:
+  application:
+    name: API-GATEWAY
   cloud:
     gateway:
       routes:
@@ -71,4 +70,3 @@ Spring:
               - DELETE
               - OPTIONS
             allowedHeaders: '*'
- 
