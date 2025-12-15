@@ -1,24 +1,5 @@
 server:
   port: 8080
-eureka:
-  client:
-    service-url:
-      defaultZone: 'http://eureka-server:8761/eureka'
-springdoc:
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  swagger-ui:
-    enabled: true
-    disable-swagger-default-url: true
-    path: /swagger-ui.html
-    urls:
-      - name: author-service
-        url: /author-service/v3/api-docs
-      - name: book-service
-        url: /book-service/v3/api-docs
-      - name: rating-service
-        url: /rating-service/v3/api-docs
 spring:
   application:
     name: API-GATEWAY
@@ -43,16 +24,16 @@ spring:
             - Path=/rating-service/**
           filters:
             - StripPrefix=1
-        - id: book-actuator
-          uri: 'lb://BOOK-SERVICE'
-          predicates:
-            - Path=/book-service/actuator/**
-          filters:
-            - StripPrefix=1
         - id: author-actuator
           uri: 'lb://AUTHOR-SERVICE'
           predicates:
             - Path=/author-service/actuator/**
+          filters:
+            - StripPrefix=1
+        - id: book-actuator
+          uri: 'lb://BOOK-SERVICE'
+          predicates:
+            - Path=/book-service/actuator/**
           filters:
             - StripPrefix=1
         - id: rating-actuator
@@ -64,7 +45,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: 'http://localhost:8080'
+            allowedOriginPatterns: '*'
             allowedMethods:
               - GET
               - POST
@@ -72,3 +53,22 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://eureka-server:8761/eureka'
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    urls:
+      - name: author-service
+        url: /author-service/v3/api-docs
+      - name: book-service
+        url: /book-service/v3/api-docs
+      - name: rating-service
+        url: /rating-service/v3/api-docs
