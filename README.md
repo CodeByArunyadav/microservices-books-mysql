@@ -42,10 +42,12 @@ Supporting systems:
 •	Swagger (API documentation)
 •	Actuator (Monitoring/Health)
 ________________________________________
-Slide 5 – Architecture Diagram   
+Slide 5 – Architecture Diagram  (updated)
+
+<img width="1536" height="1024" alt="524203141-0306a600-8873-4e47-ac04-3c09dbe023f9" src="https://github.com/user-attachments/assets/8ba4b7cf-d912-41a4-8b91-b9d3bf4eb654" />
 
 
- Slide 6 – Technology Stack
+Slide 6 – Technology Stack
 •	Java 17+
 •	Spring Boot 3.1+
 •	Spring Cloud 2023.x
