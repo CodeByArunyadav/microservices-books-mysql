@@ -42,9 +42,7 @@ Supporting systems:
 •	Swagger (API documentation)
 •	Actuator (Monitoring/Health)
 ________________________________________
-Slide 5 – Architecture Diagram  
-
-  <img width="1536" height="1024" alt="524203141-0306a600-8873-4e47-ac04-3c09dbe023f9" src="https://github.com/user-attachments/assets/138cb72f-4ed1-4ea0-9328-91930d7647e3" />
+Slide 5 – Architecture Diagram   
 
 
  Slide 6 – Technology Stack
