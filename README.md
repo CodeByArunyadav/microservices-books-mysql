@@ -42,28 +42,10 @@ Supporting systems:
 •	Swagger (API documentation)
 •	Actuator (Monitoring/Health)
 ________________________________________
-Slide 5 – Architecture Diagram (Text Description)
-                +-----------------------+
-                |      API Gateway      |
-                |  http://localhost:8080|
-                +----------+------------+
-                           |
-    --------------------------------------------------
-    |                        |                       |
-+-----------+         +-------------+         +--------------+
-| Book Svc  | <-----> | Author Svc  | <-----> | Rating Svc   |
-| 8081      |         | 8082        |         | 8083         |
-+-----------+         +-------------+         +--------------+
+Slide 5 – Architecture Diagram  
 
-             +-----------------------------+
-             |      Eureka Server 8761     |
-             +-----------------------------+
+  <img width="1536" height="1024" alt="524203141-0306a600-8873-4e47-ac04-3c09dbe023f9" src="https://github.com/user-attachments/assets/138cb72f-4ed1-4ea0-9328-91930d7647e3" />
 
-        Each service → MySQL database instance
-
-
- 	
-<img width="1536" height="1024" alt="ChatGPT Image Dec 9, 2025, 02_25_31 PM" src="https://github.com/user-attachments/assets/0306a600-8873-4e47-ac04-3c09dbe023f9" />
 
  Slide 6 – Technology Stack
 •	Java 17+
