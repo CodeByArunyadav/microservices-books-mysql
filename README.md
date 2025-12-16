@@ -42,9 +42,9 @@ Supporting systems:
 •	Swagger (API documentation)
 •	Actuator (Monitoring/Health)
 ________________________________________
-Slide 5 – Architecture Diagram  (updated)
+Slide 5 – Architecture Diagram  (updated) 
 
-<img width="1536" height="1024" alt="524203141-0306a600-8873-4e47-ac04-3c09dbe023f9" src="https://github.com/user-attachments/assets/8ba4b7cf-d912-41a4-8b91-b9d3bf4eb654" />
+<img width="1536" height="1024" alt="ChatGPT Image Dec 16, 2025, 06_35_59 PM" src="https://github.com/user-attachments/assets/cd786513-665f-418c-90f3-cab4b5184c0a" />
 
 
 Slide 6 – Technology Stack
