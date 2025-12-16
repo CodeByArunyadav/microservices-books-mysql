@@ -1,5 +1,4 @@
-This project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator.
-You can copy this directly into PowerPoint.
+This project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator + Maven build with Github Action + Run dockerfile create images of all microservices and push it to Docker hub.
 ________________________________________
 ✅ MICROSERVICES PROJECT – PPT CONTENT (TEXT VERSION)
 Project: Books, Authors, Ratings Microservices with Eureka + Gateway + MySQL + Swagger
@@ -241,6 +240,29 @@ Response:
   "author": {…},
   "rating": {…}
 }
+
+________________________________________
+Slide 24 – screenshot of Response
+
+![Capture](https://github.com/user-attachments/assets/c922b710-065b-41c3-8d79-ac7ad9ef2508)
+
+
+![Swagger1](https://github.com/user-attachments/assets/bb6900b0-16a5-456d-8c61-3599fc69c1c8)
+
+![Capture2](https://github.com/user-attachments/assets/b35799d3-17d0-4f9e-9c81-d5038de9639e)
+
+![Capture3](https://github.com/user-attachments/assets/2afc8704-6e28-445a-ac90-45e54f07d3fa)
+
+![Capture5](https://github.com/user-attachments/assets/ee5a0cb6-b9a2-45f8-b092-c6aa65c100a9)
+
+![Capture6](https://github.com/user-attachments/assets/46a81952-b203-4df7-94c8-bc684a20b23c)
+
+![Capture7](https://github.com/user-attachments/assets/5f8fdf4a-81c2-48ff-bed5-286bb044d16f)
+
+
+
+
+
 ________________________________________
 Slide 24 – Error Handling
 •	Custom exception handler
