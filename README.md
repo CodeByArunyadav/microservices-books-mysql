@@ -207,8 +207,7 @@ POST /auth/refresh
 ```
  Architecture Diagram  (updated) 
 
-<img width="1536" height="1024" alt="ChatGPT Image Dec 16, 2025, 06_35_59 PM" src="https://github.com/user-attachments/assets/cd786513-665f-418c-90f3-cab4b5184c0a" />
-
+<img width="1536" height="1024" alt="7ce5d15a-0e39-4bca-8ae5-67996ebe9675" src="https://github.com/user-attachments/assets/32bbc072-501b-448a-b543-7a51797db383" />
 
 ---
 
