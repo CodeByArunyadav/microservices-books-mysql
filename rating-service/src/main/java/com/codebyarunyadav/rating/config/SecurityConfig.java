@@ -1,4 +1,4 @@
-package com.codebyarunyadav.book.config;
+package com.codebyarunyadav.rating.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +56,7 @@ public class SecurityConfig {
                 			    "/webjars/**"
                 			).permitAll()
                         // Author endpoints (your controller)
-                        .requestMatchers("/authors/**").authenticated()
+                        .requestMatchers("/ratings/**").authenticated()
 
                         // If you want role-based later:
                         // .requestMatchers("/authors/**").hasRole("USER")

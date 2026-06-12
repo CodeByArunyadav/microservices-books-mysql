@@ -24,6 +24,8 @@ spring:
             - Path=/rating-service/**
           filters:
             - StripPrefix=1
+
+
         - id: author-actuator
           uri: 'lb://AUTHOR-SERVICE'
           predicates:
