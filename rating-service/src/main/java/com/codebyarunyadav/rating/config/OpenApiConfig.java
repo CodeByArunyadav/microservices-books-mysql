@@ -1,4 +1,4 @@
-package com.codebyarunyadav.book.config;
+package com.codebyarunyadav.rating.config;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class OpenApiConfig {
 		final String securitySchemeName = "bearerAuth";
 
 		return new OpenAPI()
-				.servers(List.of(new Server().url("http://localhost:8080/book-service").description("API Gateway")))
+				.servers(List.of(new Server().url("http://localhost:8080/rating-service").description("API Gateway")))
 				.addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
 				.components(new Components().addSecuritySchemes(securitySchemeName,
 						new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));

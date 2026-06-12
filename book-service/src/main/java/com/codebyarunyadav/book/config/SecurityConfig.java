@@ -56,7 +56,7 @@ public class SecurityConfig {
                 			    "/webjars/**"
                 			).permitAll()
                         // Author endpoints (your controller)
-                        .requestMatchers("/book/**").authenticated()
+                        .requestMatchers("/books/**").authenticated()
 
                         // If you want role-based later:
                         // .requestMatchers("/authors/**").hasRole("USER")
