@@ -1,272 +1,514 @@
-This project based on Spring Boot Microservices + Eureka + API Gateway + MySQL + Swagger + Actuator + Maven build with Github Action + Run dockerfile create images of all microservices and push it to Docker hub.
-________________________________________
-✅ MICROSERVICES PROJECT – PPT CONTENT (TEXT VERSION)
-Project: Books, Authors, Ratings Microservices with Eureka + Gateway + MySQL + Swagger
-________________________________________
-Slide 1 – Title Slide
-Microservices Architecture Project
-Books | Authors | Ratings
-Spring Boot 3.x | Eureka Server | API Gateway | MySQL | Actuator | Swagger
-Presented by: Arun Yadav
-________________________________________
-Slide 2 – Agenda
-1.	Project Overview
-2.	Architecture Diagram
-3.	Technology Stack
-4.	Service Descriptions
-5.	Eureka (Service Registry)
-6.	API Gateway
-7.	Inter-Service Communication
-8.	MySQL Integration
-9.	Swagger Configuration
-10.	Actuator Monitoring
-11.	Sample APIs
-12.	Summary
-________________________________________
-Slide 3 – What Are Microservices?
-•	Small, loosely coupled independent services
-•	Each service handles one domain
-•	Services communicate using REST
-•	Allows scaling & deployment independently
-•	Fault isolation with service registry
-________________________________________
-Slide 4 – Project Overview
-We build 3 microservices:
-1.	Book Service
-2.	Author Service
-3.	Rating Service
-Supporting systems:
-•	Eureka Server (Service Discovery)
-•	API Gateway (Central entry point)
-•	MySQL (DB for each service)
-•	Swagger (API documentation)
-•	Actuator (Monitoring/Health)
-________________________________________
-Slide 5 – Architecture Diagram  (updated) 
+# 📚 Books, Authors & Ratings Microservices
+
+A production-style Microservices Architecture project built using Spring Boot, Spring Cloud, Eureka Service Discovery, API Gateway, JWT Authentication, OpenFeign, MySQL, Swagger/OpenAPI, Actuator Monitoring, Docker, and GitHub Actions CI/CD.
+
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green)
+![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2023.x-blue)
+![MySQL](https://img.shields.io/badge/MySQL-Database-blue)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-black)
+
+---
+
+# 🚀 Project Overview
+
+This project demonstrates a complete Microservices Architecture using Spring Boot and Spring Cloud.
+
+The system consists of:
+
+### Business Services
+
+* Book Service
+* Author Service
+* Rating Service
+* JWT Authentication Service
+
+### Infrastructure Services
+
+* Eureka Server (Service Discovery)
+* API Gateway (Centralized Routing)
+* MySQL Databases
+* Swagger/OpenAPI
+* Spring Boot Actuator
+* Docker
+* GitHub Actions
+
+---
+
+# 🏗 Architecture
+
+## High-Level Architecture
+
+```text
+Client
+   │
+   ▼
+API Gateway
+   │
+   ├────────────► Auth Service
+   │
+   ├────────────► Book Service
+   │                 │
+   │                 ├────► Author Service
+   │                 │
+   │                 └────► Rating Service
+   │
+   ▼
+Eureka Server
+
+All Services → MySQL Database
+```
+
+### Service Communication
+
+```text
+Book Service
+      │
+      ├──── Feign Client ────► Author Service
+      │
+      └──── Feign Client ────► Rating Service
+```
+
+### Service Discovery
+
+All services register automatically with Eureka.
+
+```text
+http://localhost:8761
+```
+
+---
+
+# 🛠 Technology Stack
+
+## Backend
+
+* Java 17
+* Spring Boot 3.x
+* Spring Data JPA
+* Spring Security
+* JWT Authentication
+
+## Microservices
+
+* Spring Cloud Gateway
+* Eureka Discovery Server
+* OpenFeign
+
+## Database
+
+* MySQL
+
+## Documentation
+
+* Swagger/OpenAPI
+
+## Monitoring
+
+* Spring Boot Actuator
+
+## DevOps
+
+* Maven
+* Docker
+* Docker Hub
+* GitHub Actions
+
+---
+
+# 📦 Microservices
+
+## 📘 Book Service
+
+Responsibilities:
+
+* Manage books
+* CRUD operations
+* Aggregate Author and Rating information
+* Communicate with other services using Feign
+
+### APIs
+
+```http
+GET /books
+
+GET /books/{id}
+
+POST /books
+
+PUT /books/{id}
+
+DELETE /books/{id}
+```
+
+---
+
+## 👨‍💼 Author Service
+
+Responsibilities:
+
+* Manage authors
+* CRUD operations
+
+### APIs
+
+```http
+GET /authors
+
+GET /authors/{id}
+
+POST /authors
+
+PUT /authors/{id}
+
+DELETE /authors/{id}
+```
+
+---
+
+## ⭐ Rating Service
+
+Responsibilities:
+
+* Store ratings
+* Manage reviews
+* Return ratings for books
+
+### APIs
+
+```http
+GET /ratings
+
+GET /ratings/book/{id}
+
+POST /ratings
+```
+
+---
+
+## 🔐 JWT Authentication Service
+
+Responsibilities:
+
+* User Authentication
+* JWT Generation
+* JWT Validation
+* Access Token Management
+
+### APIs
+
+```http
+POST /auth/login
+
+POST /auth/register
+
+POST /auth/refresh
+```
+ Architecture Diagram  (updated) 
 
 <img width="1536" height="1024" alt="ChatGPT Image Dec 16, 2025, 06_35_59 PM" src="https://github.com/user-attachments/assets/cd786513-665f-418c-90f3-cab4b5184c0a" />
 
 
-Slide 6 – Technology Stack
-•	Java 17+
-•	Spring Boot 3.1+
-•	Spring Cloud 2023.x
-•	Spring Data JPA
-•	Spring Cloud Gateway
-•	Spring Cloud Eureka
-•	MySQL
-•	Swagger (springdoc-openapi)
-•	Actuator
-•	Maven
-•	STS 4 / IntelliJ / VSCode
-________________________________________
-Slide 7 – Microservices
-1. Book Service
-•	Saves book details
-•	Calls AuthorService & RatingService
-•	Provides combined response (BookDTO)
-2. Author Service
-•	Manages author info
-•	CRUD operations
-•	Provides AuthorDTO
-3. Rating Service
-•	Stores ratings for books
-•	Returns RatingDTO
-________________________________________
-Slide 8 – DTO Structure
-AuthorDTO
-class AuthorDTO {
-   Long id;
-   String name;
-   String biography;
-}
-RatingDTO
-class RatingDTO {
-   Long id;
-   Long bookId;
-   Integer stars;
-   String review;
-}
-________________________________________
-Slide 9 – BookResponse DTO
-class BookResponse {
-   Long id;
-   String title;
-   String description;
-   AuthorDTO author;
-   RatingDTO rating;
-}
-________________________________________
-Slide 10 – Eureka Server
-•	Registers all microservices
-•	Acts as a service registry
-•	URL → http://localhost:8761
-•	Shows live status: UP / DOWN
-•	Microservices auto-register using @EnableEurekaClient
-________________________________________
-Slide 11 – Eureka Configuration
-pom.xml
-<dependency>
-  <groupId>org.springframework.cloud</groupId>
-  <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-</dependency>
-Main Class
-@EnableEurekaServer
-@SpringBootApplication
-________________________________________
-Slide 12 – Microservice Eureka Client Config
-spring.application.name=book-service
-server.port=8081
+---
 
-eureka.client.register-with-eureka=true
-eureka.client.fetch-registry=true
-eureka.client.service-url.defaultZone=http://localhost:8761/eureka
-________________________________________
-Slide 13 – API Gateway
-•	All requests routed through gateway
-•	URL examples:
-o	/books/** → Book Service
-o	/authors/** → Author Service
-o	/ratings/** → Rating Service
-•	Handles:
-o	request routing
-o	load balancing
-o	filters
-o	security (future)
-________________________________________
-Slide 14 – Gateway Route Config
-spring.cloud.gateway.routes[0].id=book-service
-spring.cloud.gateway.routes[0].uri=lb://book-service
-spring.cloud.gateway.routes[0].predicates[0]=Path=/books/**
-________________________________________
-Slide 15 – MySQL Integration
-Each service has its own DB:
-•	book_db
-•	author_db
-•	rating_db
-Example configuration:
+# 🌍 Eureka Service Discovery
+
+All microservices register themselves with Eureka.
+
+### Dashboard
+
+```text
+http://localhost:8761
+```
+
+### Benefits
+
+* Service Registration
+* Service Discovery
+* Dynamic Routing
+* Load Balancing Support
+
+---
+
+# 🚪 API Gateway
+
+Gateway acts as the single entry point.
+
+### Gateway URL
+
+```text
+http://localhost:8080
+```
+
+### Routes
+
+```text
+/book-service/**
+/author-service/**
+/rating-service/**
+/app/**
+```
+
+### Features
+
+* Request Routing
+* Centralized Access
+* Security Integration
+* Swagger Aggregation
+
+---
+
+# 🔐 Security Architecture
+
+Authentication is implemented using JWT.
+
+## Flow
+
+```text
+1. User Login
+2. JWT Generated
+3. Client Stores Token
+4. Request Sent To Gateway
+5. Authorization Header Forwarded
+6. Target Service Validates JWT
+7. Response Returned
+```
+
+## JWT Propagation
+
+Feign Interceptor automatically forwards the token:
+
+```java
+@Bean
+public RequestInterceptor requestInterceptor() {
+    return requestTemplate -> {
+        // Forward Authorization Header
+    };
+}
+```
+
+## Benefits
+
+* Stateless Authentication
+* No Session Storage
+* Scalable
+* Secure Service Communication
+
+---
+
+# 🔄 Inter-Service Communication
+
+Implemented using OpenFeign.
+
+### Example
+
+```java
+@FeignClient("AUTHOR-SERVICE")
+public interface AuthorClient {
+
+    @GetMapping("/authors/{id}")
+    AuthorDTO getAuthor(@PathVariable Long id);
+}
+```
+
+### Communication Flow
+
+```text
+Book Service
+     │
+     ├────► Author Service
+     │
+     └────► Rating Service
+```
+
+---
+
+# 🗄 Database Architecture
+
+Each microservice owns its own database.
+
+### Databases
+
+```text
+book_db
+author_db
+rating_db
+companydb
+```
+
+### Example Configuration
+
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/book_db
 spring.datasource.username=root
 spring.datasource.password=root
+
 spring.jpa.hibernate.ddl-auto=update
-________________________________________
-Slide 16 – Sample Entity (BookService)
-@Entity
-class Book {
-  @Id @GeneratedValue
-  Long id;
-  String title;
-  Long authorId;
-}
-________________________________________
-Slide 17 – Inter-Service Communication
-BookService → calls AuthorService & RatingService
-using WebClient:
-@Autowired
-private WebClient.Builder webClient;
+```
 
-AuthorDTO author = webClient.build()
-   .get().uri("http://author-service/authors/" + authorId)
-   .retrieve().bodyToMono(AuthorDTO.class).block();
-________________________________________
-Slide 18 – Swagger Documentation
-Dependency:
-<dependency>
-  <groupId>org.springdoc</groupId>
-  <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-  <version>2.3.0</version>
-</dependency>
-Access URL:
-http://localhost:8081/swagger-ui.html
-________________________________________
-Slide 19 – Swagger Config
-(Since Spring Boot 3, no config required)
-Optional:
-@OpenAPIDefinition(
-   info = @Info(title = "Book Service API", version = "1.0")
-)
-________________________________________
-Slide 20 – Actuator
-Provides health & metrics endpoints.
-Add dependency:
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-actuator</artifactId>
-</dependency>
-________________________________________
-Slide 21 – Actuator Config
-management.endpoints.web.exposure.include=*
-management.endpoint.health.show-details=always
-URL:
-http://localhost:8081/actuator
-http://localhost:8081/actuator/health
-________________________________________
-Slide 22 – Sample APIs
+---
+
+# 📄 Swagger Documentation
+
+## Gateway Swagger
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+Access all microservices from a single Swagger UI.
+
+### Services
+
+```text
 Book Service
-•	GET /books
-•	GET /books/{id}
-•	POST /books
 Author Service
-•	GET /authors
-•	POST /authors
 Rating Service
-•	GET /ratings/book/{id}
-•	POST /ratings
-________________________________________
-Slide 23 – Combined Book Response
-API:
-GET /books/{id}
-Response:
+Authentication Service
+```
+
+---
+
+# ❤️ Actuator Monitoring
+
+### Endpoints
+
+```text
+/actuator
+/actuator/health
+/actuator/info
+/actuator/metrics
+```
+
+### Example
+
+```text
+http://localhost:8080/book-service/actuator/health
+```
+
+---
+
+# 🐳 Docker Support
+
+Each microservice contains its own Dockerfile.
+
+## Build Image
+
+```bash
+docker build -t book-service .
+```
+
+## Run Container
+
+```bash
+docker run -p 8082:8082 book-service
+```
+
+---
+
+# 🚀 GitHub Actions CI/CD
+
+Automated CI/CD pipeline using GitHub Actions.
+
+Pipeline includes:
+
+* Maven Build
+* Unit Testing
+* JAR Packaging
+* Docker Image Build
+* Docker Hub Push
+
+### Trigger
+
+```text
+push
+pull_request
+```
+
+---
+
+# 📊 Sample Aggregated Response
+
+```json
 {
-  "title": "Spring Boot",
-  "author": {…},
-  "rating": {…}
+  "id": 1,
+  "title": "Spring Boot Microservices",
+  "description": "Complete Guide",
+  "author": {
+    "id": 1,
+    "name": "Arun Yadav"
+  },
+  "ratings": [
+    {
+      "stars": 5,
+      "review": "Excellent"
+    }
+  ]
 }
+```
 
-________________________________________
-Slide 24 – screenshot of Response
+---
 
-![Capture](https://github.com/user-attachments/assets/c922b710-065b-41c3-8d79-ac7ad9ef2508)
+# 🚨 Error Handling
 
+Implemented:
 
-![Swagger1](https://github.com/user-attachments/assets/bb6900b0-16a5-456d-8c61-3599fc69c1c8)
+* Global Exception Handler
+* Validation Errors
+* Resource Not Found
+* Internal Server Errors
+* Feign Communication Errors
 
-![Capture2](https://github.com/user-attachments/assets/b35799d3-17d0-4f9e-9c81-d5038de9639e)
+---
 
-![Capture3](https://github.com/user-attachments/assets/2afc8704-6e28-445a-ac90-45e54f07d3fa)
+# 📈 Future Enhancements
 
-![Capture5](https://github.com/user-attachments/assets/ee5a0cb6-b9a2-45f8-b092-c6aa65c100a9)
+* Spring Cloud Config Server
+* Redis Caching
+* Kafka Event Streaming
+* Circuit Breaker (Resilience4j)
+* Kubernetes Deployment
+* Prometheus Monitoring
+* Grafana Dashboard
 
-![Capture6](https://github.com/user-attachments/assets/46a81952-b203-4df7-94c8-bc684a20b23c)
+---
 
-![Capture7](https://github.com/user-attachments/assets/5f8fdf4a-81c2-48ff-bed5-286bb044d16f)
+# 🎯 Learning Outcomes
 
+This project demonstrates:
 
+✅ Microservices Architecture
 
+✅ Service Discovery with Eureka
 
+✅ API Gateway Routing
 
-________________________________________
-Slide 24 – Error Handling
-•	Custom exception handler
-•	404 Not Found
-•	500 Internal Server Error
-•	Communication failure fallback
-________________________________________
-Slide 25 – Security (Future Scope)
-•	JWT Authentication
-•	Role-based access
-•	Gateway-level security
-________________________________________
-Slide 26 – Conclusion
-•	Fully functional microservices system
-•	Scalable, modular architecture
-•	Easy to document (Swagger)
-•	Easy to monitor (Actuator)
-•	Production-ready design
-________________________________________
-Slide 27 – Thank You
- 
-________________________________________
- 
-Would you like those?
+✅ JWT Authentication
 
+✅ OpenFeign Communication
+
+✅ Swagger Aggregation
+
+✅ Actuator Monitoring
+
+✅ Docker Containerization
+
+✅ GitHub Actions CI/CD
+
+✅ Docker Hub Deployment
+
+---
+
+# 👨‍💻 Author
+
+**Arun Yadav**
+
+GitHub:
+https://github.com/CodeByArunyadav
+
+---
+
+# ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
