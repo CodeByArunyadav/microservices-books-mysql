@@ -1,11 +1,3 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Build Changed Microservices
 
 on:
@@ -19,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
+      common: ${{ steps.filter.outputs.common }}
       eureka: ${{ steps.filter.outputs.eureka }}
       gateway: ${{ steps.filter.outputs.gateway }}
       author: ${{ steps.filter.outputs.author }}
@@ -32,6 +25,8 @@ jobs:
         id: filter
         with:
           filters: |
+            common:
+              - 'jwt-security-common/**'
             eureka:
               - 'eureka-server/**'
             gateway:
@@ -57,7 +52,8 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - working-directory: eureka-server
+      - name: Build Eureka Server
+        working-directory: eureka-server
         run: mvn clean package -DskipTests
 
       - uses: docker/login-action@v3
@@ -65,14 +61,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - working-directory: eureka-server
+      - name: Docker Build and Push Eureka Server
+        working-directory: eureka-server
         run: |
           docker build -t codebyarunyadav/eureka-server:${{ github.sha }} .
           docker push codebyarunyadav/eureka-server:${{ github.sha }}
 
   build-gateway:
     needs: changes
-    if: needs.changes.outputs.gateway == 'true'
+    if: needs.changes.outputs.gateway == 'true' || needs.changes.outputs.common == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -84,7 +81,12 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - working-directory: api-gateway
+      - name: Install JWT Security Common
+        working-directory: jwt-security-common
+        run: mvn clean install -Dmaven.test.skip=true
+
+      - name: Build API Gateway
+        working-directory: api-gateway
         run: mvn clean package -DskipTests
 
       - uses: docker/login-action@v3
@@ -92,7 +94,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - working-directory: api-gateway
+      - name: Docker Build and Push API Gateway
+        working-directory: api-gateway
         run: |
           docker build -t codebyarunyadav/api-gateway:latest .
           docker build -t codebyarunyadav/api-gateway:${{ github.sha }} .
@@ -101,7 +104,7 @@ jobs:
 
   build-author:
     needs: changes
-    if: needs.changes.outputs.author == 'true'
+    if: needs.changes.outputs.author == 'true' || needs.changes.outputs.common == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -113,7 +116,12 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - working-directory: author-service
+      - name: Install JWT Security Common
+        working-directory: jwt-security-common
+        run: mvn clean install -Dmaven.test.skip=true
+
+      - name: Build Author Service
+        working-directory: author-service
         run: mvn clean package -DskipTests
 
       - uses: docker/login-action@v3
@@ -121,7 +129,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - working-directory: author-service
+      - name: Docker Build and Push Author Service
+        working-directory: author-service
         run: |
           docker build -t codebyarunyadav/author-service:latest .
           docker build -t codebyarunyadav/author-service:${{ github.sha }} .
@@ -130,7 +139,7 @@ jobs:
 
   build-book:
     needs: changes
-    if: needs.changes.outputs.book == 'true'
+    if: needs.changes.outputs.book == 'true' || needs.changes.outputs.common == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -142,7 +151,12 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - working-directory: book-service
+      - name: Install JWT Security Common
+        working-directory: jwt-security-common
+        run: mvn clean install -Dmaven.test.skip=true
+
+      - name: Build Book Service
+        working-directory: book-service
         run: mvn clean package -DskipTests
 
       - uses: docker/login-action@v3
@@ -150,7 +164,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - working-directory: book-service
+      - name: Docker Build and Push Book Service
+        working-directory: book-service
         run: |
           docker build -t codebyarunyadav/book-service:latest .
           docker build -t codebyarunyadav/book-service:${{ github.sha }} .
@@ -159,7 +174,7 @@ jobs:
 
   build-rating:
     needs: changes
-    if: needs.changes.outputs.rating == 'true'
+    if: needs.changes.outputs.rating == 'true' || needs.changes.outputs.common == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -171,7 +186,12 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - working-directory: rating-service
+      - name: Install JWT Security Common
+        working-directory: jwt-security-common
+        run: mvn clean install -Dmaven.test.skip=true
+
+      - name: Build Rating Service
+        working-directory: rating-service
         run: mvn clean package -DskipTests
 
       - uses: docker/login-action@v3
@@ -179,11 +199,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - working-directory: rating-service
+      - name: Docker Build and Push Rating Service
+        working-directory: rating-service
         run: |
           docker build -t codebyarunyadav/rating-service:latest .
           docker build -t codebyarunyadav/rating-service:${{ github.sha }} .
           docker push codebyarunyadav/rating-service:latest
           docker push codebyarunyadav/rating-service:${{ github.sha }}
-
-
