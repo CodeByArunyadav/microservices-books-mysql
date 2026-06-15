@@ -79,8 +79,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
-
+        
       - name: Install JWT Security Common
         working-directory: jwt-security-common
         run: mvn clean install -DskipTests
@@ -113,8 +112,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
-
+         
       - name: Install JWT Security Common
         working-directory: jwt-security-common
         run: mvn clean install -DskipTests
