@@ -1,6 +1,7 @@
 FROM eclipse-temurin:17-jdk
-WORKDIR /rating-service
+WORKDIR /app
 
-COPY rating-service/target/rating-service.jar rating-service.jar
+COPY target/*.jar app.jar
+
 EXPOSE 8083
-ENTRYPOINT ["java", "-jar", "rating-service.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,6 +1,7 @@
 FROM eclipse-temurin:17-jdk
-WORKDIR /author-service
+WORKDIR /app
 
-COPY author-service/target/author-service.jar author-service.jar
+COPY target/*.jar app.jar
+
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "author-service.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

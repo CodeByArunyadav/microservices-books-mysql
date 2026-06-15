@@ -1,6 +1,7 @@
 FROM eclipse-temurin:17-jdk
-WORKDIR /book-service
+WORKDIR /app
 
-COPY book-service/target/book-service.jar book-service.jar
+COPY target/*.jar app.jar
+
 EXPOSE 8082
-ENTRYPOINT ["java", "-jar", "book-service.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
