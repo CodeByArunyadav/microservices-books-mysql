@@ -83,8 +83,7 @@ jobs:
 
       - name: Install JWT Security Common
         working-directory: jwt-security-common
-        run: mvn clean install -Dmaven.test.skip=true
-
+        run: mvn clean install -DskipTests
       - name: Build API Gateway
         working-directory: api-gateway
         run: mvn clean package -DskipTests
@@ -118,7 +117,7 @@ jobs:
 
       - name: Install JWT Security Common
         working-directory: jwt-security-common
-        run: mvn clean install -Dmaven.test.skip=true
+        run: mvn clean install -DskipTests
 
       - name: Build Author Service
         working-directory: author-service
@@ -153,7 +152,7 @@ jobs:
 
       - name: Install JWT Security Common
         working-directory: jwt-security-common
-        run: mvn clean install -Dmaven.test.skip=true
+        run: mvn clean install -DskipTests
 
       - name: Build Book Service
         working-directory: book-service
@@ -188,7 +187,7 @@ jobs:
 
       - name: Install JWT Security Common
         working-directory: jwt-security-common
-        run: mvn clean install -Dmaven.test.skip=true
+        run: mvn clean install -DskipTests
 
       - name: Build Rating Service
         working-directory: rating-service
