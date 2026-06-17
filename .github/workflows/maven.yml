@@ -64,7 +64,9 @@ jobs:
       - name: Docker Build and Push Eureka Server
         working-directory: eureka-server
         run: |
+          docker build -t codebyarunyadav/eureka-server:latest .
           docker build -t codebyarunyadav/eureka-server:${{ github.sha }} .
+          docker push codebyarunyadav/eureka-server:latest
           docker push codebyarunyadav/eureka-server:${{ github.sha }}
 
   build-gateway:
