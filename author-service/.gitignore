@@ -1,0 +1,17 @@
+# Maven
+
+**/target/
+
+# STS / Eclipse
+.project
+.classpath
+.settings/
+
+# Local environment
+.env
+
+# Local Spring profile
+src/main/resources/application-local.yml
+
+# Logs
+*.log 
