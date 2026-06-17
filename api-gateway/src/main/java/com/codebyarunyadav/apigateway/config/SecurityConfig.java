@@ -25,5 +25,6 @@ public class SecurityConfig {
                         .anyExchange().permitAll()
                 )
                 .build();
+        
     }
 }
