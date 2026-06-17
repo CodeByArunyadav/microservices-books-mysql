@@ -55,6 +55,11 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: '*'
+
+jwt:
+    user-secret: ${JWT_USER_SECRET}
+    internal-secret: ${JWT_INTERNAL_SECRET}
+    internal-expiration-ms: ${JWT_INTERNAL_EXPIRATION_MS}
 eureka:
   client:
     service-url:
