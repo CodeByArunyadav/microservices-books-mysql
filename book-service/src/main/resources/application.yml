@@ -2,7 +2,7 @@ server:
   port: 8082
   forward-headers-strategy: framework
 jwt:
-    secret: mySuperSecretKeyForJwtAuthentication123456
+    secret: ${JWT_SECRET}
 spring:
   application:
     name: BOOK-SERVICE
