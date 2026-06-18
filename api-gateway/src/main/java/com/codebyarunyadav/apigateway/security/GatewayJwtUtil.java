@@ -16,7 +16,7 @@ public class GatewayJwtUtil {
     @Value("${jwt.user-secret}")
     private String userSecret;
 
-    @Value("${jwt.internal-secret}")
+    @Value("${jwt.secret}")
     private String internalSecret;
 
     @Value("${jwt.internal-expiration-ms:300000}")
