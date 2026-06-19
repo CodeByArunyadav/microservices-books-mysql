@@ -73,6 +73,8 @@ springdoc:
     path: /swagger-ui.html
     disable-swagger-default-url: true
     urls:
+      - name: jwt-authentication
+        url: /jwt-authentication/app/v3/api-docs
       - name: author-service
         url: /author-service/v3/api-docs
       - name: book-service
