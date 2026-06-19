@@ -37,4 +37,9 @@ public class AuthorDTO {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+	public void setStatus(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
