@@ -35,39 +35,47 @@ management:
   endpoint:
     health:
       show-details: always
+  resilience4j:
+    circuitbreaker:
+      instances:
+        authorService:
+          register-health-indicator: true
+          sliding-window-size: 10
+          minimum-number-of-calls: 5
+          permitted-number-of-calls-in-half-open-state: 3
+          automatic-transition-from-open-to-half-open-enabled: true
+          wait-duration-in-open-state: 10s
+          failure-rate-threshold: 50
+          event-consumer-buffer-size: 10
+          record-exceptions:
+            - feign.FeignException
+            - java.io.IOException
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      authorService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10000
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      ratingService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10000
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-  retry:
-    instances:
-      authorService:
-        maxAttempts: 3
-        waitDuration: 1000
-        retryExceptions: 
-          - org.springframework.web.client.HttpClientErrorException.ServiceUnavailable
-          - feign.FeignException.ServiceUnavailable
-      ratingService:
-        maxAttempts: 3
-        waitDuration: 1000
-        retryExceptions:
-          - org.springframework.web.client.HttpClientErrorException.ServiceUnavailable
-          - feign.FeignException.ServiceUnavailable
+        ratingService:
+          register-health-indicator: true
+          sliding-window-size: 10
+          minimum-number-of-calls: 5
+          permitted-number-of-calls-in-half-open-state: 3
+          automatic-transition-from-open-to-half-open-enabled: true
+          wait-duration-in-open-state: 10s
+          failure-rate-threshold: 50
+          event-consumer-buffer-size: 10
+          record-exceptions:
+            - feign.FeignException
+            - java.io.IOException
+
+    retry:
+      instances:
+        authorService:
+          max-attempts: 3
+          wait-duration: 1s
+          retry-exceptions:
+            - feign.FeignException
+            - java.io.IOException
+
+        ratingService:
+          max-attempts: 3
+          wait-duration: 1s
+          retry-exceptions:
+            - feign.FeignException
+            - java.io.IOException
