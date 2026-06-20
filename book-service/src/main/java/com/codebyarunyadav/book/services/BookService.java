@@ -15,6 +15,20 @@ public class BookService {
 
     @Autowired
     private BookExternalService bookExternalService;
+    
+    /**
+     * Save a new book to the database
+     * @param book the book object to save
+     * @return the saved book
+     */
+    public Book saveBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book cannot be null");
+        }
+        
+        return bookRepo.save(book);
+ 
+    }
 
     public BookResponse getBookDetails(Long id) {
 
