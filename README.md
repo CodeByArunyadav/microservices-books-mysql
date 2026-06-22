@@ -500,6 +500,8 @@ This project demonstrates:
 
 ✅ Docker Hub Deployment
 
+✅ Centrlise audit Logging using Kafka
+
 ---
 
 # 👨‍💻 Author
